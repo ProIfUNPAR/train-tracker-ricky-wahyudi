@@ -1,0 +1,102 @@
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { Geolocation ,GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
+
+declare var google: any;
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+
+  options:GeolocationOptions;
+  currentPos:Geoposition;
+  @ViewChild('map') mapElement: ElementRef;
+	map:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private geolocation: Geolocation) {
+	
+  }
+
+  ionViewDidLoad() {
+    
+	
+	this.getUserPosition();
+	//this.DisplayMap();
+	this.addMap('-6.917464', '107.619123');
+  }
+
+  //DisplayMap() {
+	  
+    //const location = new google.maps.LatLng('-6.917464', '107.619123');
+
+    //const options = {center: location,zoom: 15,streetViewControl: false};
+
+	//this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+	
+	//this.addMarker(location, map);
+	
+  //}
+  
+  addMap(lat,longi){
+
+    let latLng = new google.maps.LatLng(lat, longi);
+	
+    let mapOptions = {
+    center: latLng,
+    zoom: 15,
+	streetViewControl: false
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.addMarker();
+
+}
+
+  //addMarker(position, map) {
+  //  return new google.maps.Marker({
+  //    position,
+ //     map
+ //   });
+ // }
+  
+  getUserPosition(){
+     this.options = {
+    enableHighAccuracy :false
+    };
+    this.geolocation.getCurrentPosition(this.options).then((pos : Geoposition) => {
+
+        this.currentPos = pos;     
+
+        console.log(pos);
+
+    },(err : PositionError)=>{
+        console.log("error : " + err.message);
+    ;
+    })
+}
+
+addMarker(){
+
+    let marker = new google.maps.Marker({
+    map: this.map,
+    animation: google.maps.Animation.DROP,
+    position: this.map.getCenter()
+    });
+
+    let content = "<p>This is your current position !</p>";          
+    let infoWindow = new google.maps.InfoWindow({
+    content: content
+    });
+
+    google.maps.event.addListener(marker, 'click', () => {
+    infoWindow.open(this.map, marker);
+    });
+
+}
+  
+  
+  
+}
