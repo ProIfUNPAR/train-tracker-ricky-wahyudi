@@ -1,6 +1,6 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { NavParams } from 'ionic-angular/navigation/nav-params';
+//import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 declare var google: any;
 
@@ -10,35 +10,76 @@ declare var google: any;
 })
 export class HomePage {
 
-  @ViewChild('map') mapRef: ElementRef;
+  //@ViewChild('map') mapRef: ElementRef;
+  Destination: any = '';
+  MyLocation: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController) {
 
   }
 
-  ionViewDidLoad() {
-    this.DisplayMap();
-  }
+  calculateAndDisplayRoute() {
+    let that = this;
+    let directionsService = new google.maps.DirectionsService;
+    let directionsDisplay = new google.maps.DirectionsRenderer;
+    const map = new google.maps.Map(document.getElementById('mymap'), {
+      zoom: 7,
+      center: { lat: 41.85, lng: -87.65 }
+    });
+    directionsDisplay.setMap(map);
 
-  DisplayMap() {
-    const location = new google.maps.LatLng('-6.917464', '107.619123');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-    const options = {
-      center: location,
-      zoom: 10,
-      streetViewControl: false
-    };
+        map.setCenter(pos);
+        this.MyLocation = new google.maps.LatLong(pos);
+      }, function () {
+        
+      });
+    } else {
+      // Browser doesn't support Geolocation
+    }
 
-    const map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-    this.addMarker(location, map);
-  }
-
-  addMarker(position, map) {
-    return new google.maps.Marker({
-      position,
-      map
+    directionsService.route({
+      origin: this.MyLocation,
+      destination: this.Destination,
+      travelMode: 'DRIVING'
+    }, function (response, status) {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
     });
   }
+
+  // ionViewDidLoad() {
+  //   this.DisplayMap();
+  // }
+
+  // DisplayMap() {
+  //   const location = new google.maps.LatLng('-6.917464', '107.619123');
+
+  //   const options = {
+  //     center: location,
+  //     zoom: 10,
+  //     streetViewControl: false
+  //   };
+
+  //   const map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  //   this.addMarker(location, map);
+  // }
+
+  // addMarker(position, map) {
+  //   return new google.maps.Marker({
+  //     position,
+  //     map
+  //   });
+  // }
 
 }
