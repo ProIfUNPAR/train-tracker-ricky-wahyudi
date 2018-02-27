@@ -9,8 +9,15 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label floating>Destination</ion-label>
-      <ion-input type="text" [(ngModel)]="Destination"></ion-input>
+      <ion-label><b>KERETA</b></ion-label>
+	  <ion-select [(ngModel)]="kereta">
+      <ion-option value="argoparahyangan">Argo Parahyangan</ion-option>
+      <ion-option value="tglbhr">Tegal Bahari</ion-option>
+      <ion-option value="crm">Ciremai</ion-option>
+      <ion-option value="arhojati">Argo Jati</ion-option>
+      <ion-option value="argobromoanggrek">Argo Bromo Anggrek</ion-option>
+      <ion-option value="argodwipangga">Argo Dwipangga</ion-option>
+    </ion-select>
     </ion-item>
   </ion-list>
   <p>Distance: {{time}}</p>
