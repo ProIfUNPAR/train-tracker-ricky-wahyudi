@@ -13,6 +13,7 @@
       <ion-input type="text" [(ngModel)]="Destination"></ion-input>
     </ion-item>
   </ion-list>
+  <p>Distance: {{time}}</p>
   <button ion-button style="background-color: red" full (click)="calculateAndDisplayRoute()">Get Direction</button>
   <div #map id="mymap"></div>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
