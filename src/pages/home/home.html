@@ -9,33 +9,15 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-<<<<<<< HEAD
-	<ion-label><b>KERETA</b></ion-label>
-		<ion-select [(ngModel)]="kereta">
-		  <ion-option value="argoparahyangan">Argo Parahyangan</ion-option>
-		  <ion-option value="tegalbahari">Tegal Bahari</ion-option>
-		  <ion-option value="ciremai">Ciremai</ion-option>
-		</ion-select>
-
-=======
-      <ion-label><b>KERETA</b></ion-label>
-	  <ion-select [(ngModel)]="kereta">
-      <ion-option value="argoparahyangan">Argo Parahyangan</ion-option>
-      <ion-option value="tglbhr">Tegal Bahari</ion-option>
-      <ion-option value="crm">Ciremai</ion-option>
-      <ion-option value="arhojati">Argo Jati</ion-option>
-      <ion-option value="argobromoanggrek">Argo Bromo Anggrek</ion-option>
-      <ion-option value="argodwipangga">Argo Dwipangga</ion-option>
-    </ion-select>
->>>>>>> b4cdf5314b90dbc9b3bb23ef4c3c0c1cbac8a894
+      <ion-label>
+        <b>KERETA</b>
+      </ion-label>
+      <ion-select [(ngModel)]="kereta.kereta">
+        <ion-option *ngFor="let item of kereta">{{item.name}}</ion-option>
+      </ion-select>
     </ion-item>
   </ion-list>
-<<<<<<< HEAD
-  <button ion-button style="background-color: red" full (click)="calculateAndDisplayRoute()">Daftar Stasiun</button>
-=======
-  <p>Distance: {{time}}</p>
-  <button ion-button style="background-color: red" full (click)="calculateAndDisplayRoute()">Get Direction</button>
->>>>>>> 3fcf746acc2e33341f7b36f6c09dd213aecbe5cc
+  <button ion-button style="background-color: red" full (click)="loadJson()">Daftar Stasiun</button>
   <div #map id="mymap"></div>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>
