@@ -22,7 +22,7 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
-
+    this.loadJson();
   }
 
   ionViewDidLoad() {

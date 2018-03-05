@@ -1,7 +1,15 @@
 {
   "kereta":[
     {
-      "name" : "Argo Parahyangan BG"
+      "name" : "Argo Parahyangan BG",
+      "station" : [
+        {
+          "a" : "bandung"
+        },
+        {
+          "a" : "gambir"
+        }
+      ]
     },
     {
       "name" : "Argo Parahyangan GB"
