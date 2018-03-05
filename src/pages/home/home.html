@@ -9,17 +9,15 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-
       <ion-label>
         <b>KERETA</b>
       </ion-label>
       <ion-select [(ngModel)]="kereta.kereta">
-        <ion-option *ngFor="let item of kereta">{{item.name}}</ion-option>
+        <ion-option *ngFor="let item of kereta">{{ item.nama }}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
-  <button ion-button style="background-color: red" full (click)="loadJson()">Daftar Stasiun</button>
-
+  <button ion-button style="background-color: red" full>Daftar Stasiun</button>
   <div #map id="mymap"></div>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>
