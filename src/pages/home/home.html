@@ -10,56 +10,16 @@
   <ion-list>
     <ion-item>
 
-      <ion-label><b>KERETA</b></ion-label>
-	  <ion-select [(ngModel)]="kereta">
-      <ion-option value="argoparahyangan">Argo Parahyangan (Bandung)</ion-option>
-      <ion-option value="argoparahyangan">Argo Parahyangan (Gambir)</ion-option>
-	  <ion-option value="tglbhr">Tegal Bahari (Tegal)</ion-option>
-	  <ion-option value="tglbhr">Tegal Bahari (Gambir)</ion-option>
-      <ion-option value="crm">Ciremai (-)</ion-option>
-      <ion-option value="arhojati">Argo Jati</ion-option>
-      <ion-option value="argobromoanggrek">Argo Bromo Anggrek</ion-option>
-      <ion-option value="argodwipangga">Argo Dwipangga</ion-option>
-    </ion-select>
-
-    </ion-item>
-	
-	<ion-item>
-
-      <ion-label><b>DESTINASI</b></ion-label>
-	  <ion-select [(ngModel)]="destinasi">
-      <ion-option value="bandung">Bandung</ion-option>
-      <ion-option value="gambir">Gambir</ion-option>
-    </ion-select>
-
+      <ion-label>
+        <b>KERETA</b>
+      </ion-label>
+      <ion-select [(ngModel)]="kereta.kereta">
+        <ion-option *ngFor="let item of kereta">{{item.name}}</ion-option>
+      </ion-select>
     </ion-item>
   </ion-list>
-    <button ion-button style="background-color: red" full (click)="calculateAndDisplayRoute()">Daftar Stasiun</button>
-	
-	<ion-list-header>
-		Bandung
-	</ion-list-header>
-	<ion-item>Gambir</ion-item>
-	<ion-item>Bekasi</ion-item>
-	<ion-item>Purwakarta</ion-item>
-	<ion-item>Cimahi</ion-item>
-	<ion-item>Bandung</ion-item>
-	
-	
-	<ion-list-header>
-		Gambir
-	</ion-list-header>
-	<ion-item>Bandung</ion-item>
-	<ion-item>Cimahi</ion-item>
-	<ion-item>Purwakarta</ion-item>
-	<ion-item>Bekasi</ion-item>
-	<ion-item>Jatinegara</ion-item>
-	<ion-item>Gambir</ion-item>
-	
-	
+  <button ion-button style="background-color: red" full (click)="loadJson()">Daftar Stasiun</button>
 
-  <button ion-button style="background-color: red" full (click)="calculateAndDisplayRoute()">Daftar Stasiun</button>
-  <p>Distance: {{time}}</p>
   <div #map id="mymap"></div>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>
