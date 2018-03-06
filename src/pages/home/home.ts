@@ -97,7 +97,8 @@ export class HomePage {
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
-      //console.log(this.kereta)
+      this.statiun = data.kereta[0].stasiun;
+      console.log(this.statiun);
     });
   }
   

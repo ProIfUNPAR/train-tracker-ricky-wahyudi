@@ -17,6 +17,16 @@
       </ion-select>
     </ion-item>
   </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <b>STASIUN KEBERANGKATAN</b>
+      </ion-label>
+      <ion-select [(ngModel)]="statiun" (ionChange)="onChange(statiun)">
+        <ion-option *ngFor="let item1 of statiun" value="{{item1.nama}}">{{ item1.nama }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
   <button ion-button style="background-color: red" full>Daftar Stasiun</button>
   <div #map id="mymap"></div>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
