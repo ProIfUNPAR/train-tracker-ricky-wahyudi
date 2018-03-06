@@ -12,8 +12,8 @@
       <ion-label>
         <b>KERETA</b>
       </ion-label>
-      <ion-select [(ngModel)]="kereta.kereta">
-        <ion-option *ngFor="let item of kereta">{{ item.nama }}</ion-option>
+      <ion-select [(ngModel)]="kereta.kereta" (ionChange)="onChange(kereta.kereta)">
+        <ion-option *ngFor="let item of kereta" value="{{item.nama}}">{{ item.nama }}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>

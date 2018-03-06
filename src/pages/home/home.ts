@@ -19,6 +19,7 @@ export class HomePage {
   train: { lat: number, lng: number } = { lat: -6.9126, lng: 107.6023 };
   time: any;
   kereta = [];
+  statiun=[];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
@@ -30,12 +31,11 @@ export class HomePage {
     //this.DisplayMap();
     this.calculateAndDisplayRoute();
     this.kereta;
+	this.statiun;
   }
 
   onLocateUser() {
-    this.geoloc.getCurrentPosition()
-      .then(
-      (resp) => {
+    this.geoloc.watchPosition().subscribe((resp)=>{
         console.log('position gotten: long:', resp.coords.longitude, ' lat:', resp.coords.latitude);
         this.resp = location;
         this.gmLocation.lat = resp.coords.latitude;
@@ -48,12 +48,8 @@ export class HomePage {
         this.addMarker(statiun, this.map);
         this.time = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, -6.9126, 107.6023);
       }
-      )
-      .catch(
-      (error) => {
-        console.log('Error getting location', error);
-      }
-      )
+      );
+      
 
   }
 
@@ -101,9 +97,23 @@ export class HomePage {
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
-      console.log(this.kereta)
+      //console.log(this.kereta)
     });
   }
-
+  
+  onChange(selectedValue){
+	    this.dariStation(selectedValue);
 }
 
+ dariStation(value){
+	
+	for(var i=0;i<this.kereta.length;i++){
+		if(value==this.kereta[i].nama){
+			console.log(this.kereta[i]);
+			this.statiun=this.kereta[i];
+		}
+	}
+	
+	console.log(this.statiun);
+ }
+}
