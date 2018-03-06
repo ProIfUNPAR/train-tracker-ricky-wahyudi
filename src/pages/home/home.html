@@ -22,11 +22,7 @@
       <ion-label>
         <b>STASIUN KEBERANGKATAN</b>
       </ion-label>
-<<<<<<< HEAD
-      <ion-select [(ngModel)]="statiun">
-=======
       <ion-select [(ngModel)]="statiuns" (ionChange)="mulaiDariStatiun(statiuns)">
->>>>>>> a51284e3bafe94112efc377908e8c82a3d72a57d
         <ion-option *ngFor="let item1 of statiun" value="{{item1.nama}}">{{ item1.nama }}</ion-option>
       </ion-select>
     </ion-item>

@@ -112,10 +112,6 @@ export class HomePage {
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
-<<<<<<< HEAD
-=======
-      
->>>>>>> a51284e3bafe94112efc377908e8c82a3d72a57d
     });
   }
   
@@ -126,17 +122,11 @@ export class HomePage {
  dariStation(value){	
 	for(var i=0;i<this.kereta.length;i++){
 		if(value==this.kereta[i].nama){
-<<<<<<< HEAD
       this.statiun = this.kereta[i].stasiun;
-=======
-			console.log(this.kereta[i].stasiun);
-			this.statiun=this.kereta[i].stasiun;
->>>>>>> a51284e3bafe94112efc377908e8c82a3d72a57d
 		}
 	}
-	
-	console.log(this.statiun);
  }
+ 
  mulaiDariStatiun(statiun){
 	 
 	 for(var i=0;i<this.statiun.length;i++){
