@@ -97,8 +97,6 @@ export class HomePage {
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
-      this.statiun = data.kereta[0].stasiun;
-      console.log(this.statiun);
     });
   }
   
@@ -106,12 +104,10 @@ export class HomePage {
 	    this.dariStation(selectedValue);
 }
 
- dariStation(value){
-	
+ dariStation(value){	
 	for(var i=0;i<this.kereta.length;i++){
 		if(value==this.kereta[i].nama){
-			console.log(this.kereta[i]);
-			this.statiun=this.kereta[i];
+      this.statiun = this.kereta[i].stasiun;
 		}
 	}
 	

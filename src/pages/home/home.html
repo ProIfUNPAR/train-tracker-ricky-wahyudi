@@ -22,7 +22,7 @@
       <ion-label>
         <b>STASIUN KEBERANGKATAN</b>
       </ion-label>
-      <ion-select [(ngModel)]="statiun" (ionChange)="onChange(statiun)">
+      <ion-select [(ngModel)]="statiun">
         <ion-option *ngFor="let item1 of statiun" value="{{item1.nama}}">{{ item1.nama }}</ion-option>
       </ion-select>
     </ion-item>
