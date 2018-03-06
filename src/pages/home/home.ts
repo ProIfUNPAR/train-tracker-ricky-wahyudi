@@ -17,9 +17,14 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   markers: any = [];
   train: { lat: number, lng: number } = { lat: -6.9126, lng: 107.6023 };
-  time: any;
+  distance: any="Pilih Argo dan Statiun";
+  time: any="Pilih Argo dan Statiun";
+  kecepatan:any="Pilih Argo dan Statiun";
   kereta = [];
   statiun=[];
+  tujuan=0;
+  stasiunTujuan:any="Pilih Argo dan Statiun";
+  
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
@@ -32,6 +37,10 @@ export class HomePage {
     this.calculateAndDisplayRoute();
     this.kereta;
 	this.statiun;
+	this.distance;
+	this.time;
+	this.kecepatan;
+	this.stasiunTujuan;
   }
 
   onLocateUser() {
@@ -40,13 +49,19 @@ export class HomePage {
         this.resp = location;
         this.gmLocation.lat = resp.coords.latitude;
         this.gmLocation.lng = resp.coords.longitude;
-        const options = { center: this.gmLocation, zoom: 15, streetViewControl: false };
+        const options = { center: this.gmLocation, zoom: 12, streetViewControl: false };
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
         const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
         this.addMarker(loc, this.map);
-        const statiun = new google.maps.LatLng(-6.9126, 107.6023);
-        this.addMarker(statiun, this.map);
-        this.time = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, -6.9126, 107.6023);
+        
+        
+        if(this.tujuan==0){
+		
+		}else{
+			this.distance=this.getDistanceFromLatLonInKm(this.gmLocation.lat,this.gmLocation.lng,this.statiun[this.tujuan].Lat,this.statiun[this.tujuan].Long);
+			const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			this.addMarker(stat, this.map);
+		}
       }
       );
       
@@ -97,8 +112,7 @@ export class HomePage {
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
-      this.statiun = data.kereta[0].stasiun;
-      console.log(this.statiun);
+      
     });
   }
   
@@ -110,11 +124,34 @@ export class HomePage {
 	
 	for(var i=0;i<this.kereta.length;i++){
 		if(value==this.kereta[i].nama){
-			console.log(this.kereta[i]);
-			this.statiun=this.kereta[i];
+			console.log(this.kereta[i].stasiun);
+			this.statiun=this.kereta[i].stasiun;
 		}
 	}
 	
 	console.log(this.statiun);
+ }
+ mulaiDariStatiun(statiun){
+	 
+	 for(var i=0;i<this.statiun.length;i++){
+		if(statiun==this.statiun[i].nama){
+			this.tujuan=i;
+			console.log(this.tujuan);
+		}
+	}
+	if(this.tujuan<this.statiun.length){
+		this.tujuan++;
+		this.distance=this.getDistanceFromLatLonInKm(this.gmLocation.lat,this.gmLocation.lng,this.statiun[this.tujuan].Lat,this.statiun[this.tujuan].Long);
+		this.stasiunTujuan=this.statiun[this.tujuan].nama;
+	}else{
+		this.stasiunTujuan="Anda telah di statiun tujuan terakhir"
+		this.distance="0km";
+	}
+	console.log(this.statiun[this.tujuan].Lat);
+	console.log(this.statiun[this.tujuan].Long);
+	this.addMarker(this.statiun[this.tujuan].Lat,this.statiun[this.tujuan].Long);
+	const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+	this.addMarker(stat, this.map);
+	
  }
 }
