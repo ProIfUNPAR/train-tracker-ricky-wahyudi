@@ -1,4 +1,4 @@
-{
+	{
   "kereta": [
     {
       "nama": "Parahyangan (Bandung-Gambir)",
@@ -703,7 +703,425 @@
           "Lat": "-7.977497",
           "Long": "112.637028"
         }
+      ] // DISINI YAAAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!!
+    },
+    {
+      "nama": "Sawunggalih Utama (Pasar Senen - Kutuarjo)",
+      "stasiun": [
+        {
+          "nama": "Pasar Senen",
+          "Lat": "-6.174732",
+          "Long": "106.844337"
+        },
+        {
+          "nama": "Cirebon",
+          "Lat": "-6.705386",
+          "Long": "108.555444"
+        },
+        {
+          "nama": "Ciledug",
+          "Lat": "-6.903085",
+          "Long": "108.743935"
+        },
+        {
+          "nama": "Bumiayu",
+          "Lat": "-7.237399",
+          "Long": "109.009802"
+        },
+        {
+          "nama": "Purwokerto",
+          "Lat": "-7.419224",
+          "Long": "109.221922"
+        },
+        {
+          "nama": "Kroya",
+          "Lat": "-7.630120",
+          "Long": "109.253538"
+        },
+        {
+          "nama": "Gombong",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Karanganyar",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Kebumen",
+          "Lat": "-7.681909",
+          "Long": "109.662123"
+        },
+        {
+          "nama": "Kutoarjo",
+          "Lat": "-7.726044",
+          "Long": "109.907126"
+        }
+      ]
+    },
+    {
+      "nama": "Sawunggalih Utama (Kutuarjo - Pasar Senen)",
+      "stasiun": [
+        {
+          "nama": "Kutoarjo",
+          "Lat": "-7.726044",
+          "Long": "109.907126"
+        },
+        {
+          "nama": "Kebumen",
+          "Lat": "-7.681909",
+          "Long": "109.662123"
+        },
+        {
+          "nama": "Karanganyar",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Gombong",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Kroya",
+          "Lat": "-7.630120",
+          "Long": "109.253538"
+        },
+        {
+          "nama": "Purwokerto",
+          "Lat": "-7.419224",
+          "Long": "109.221922"
+        },
+        {
+          "nama": "Bumiayu",
+          "Lat": "-7.237399",
+          "Long": "109.009802"
+        },
+        {
+          "nama": "Ciledug",
+          "Lat": "-6.903085",
+          "Long": "108.743935"
+        },
+        {
+          "nama": "Cirebon",
+          "Lat": "-6.705386",
+          "Long": "108.555444"
+        },
+        {
+          "nama": "Jatinegara",
+          "Lat": "-6.215291",
+          "Long": "108.743935"
+        },
+        {
+          "nama": "Pasar Senen",
+          "Lat": "-6.174732",
+          "Long": "106.844337"
+        }
+      ]
+    },
+    {
+      "nama": "Lodaya (Solo Balapan - Bandung)",
+      "stasiun": [
+        {
+          "nama": "Solo Balapan",
+          "Lat": "-7.557016",
+          "Long": "110.821417"
+        },
+        {
+          "nama": "Klaten",
+          "Lat": "-7.712342",
+          "Long": "110.603024"
+        },
+        {
+          "nama": "Yogyakarta",
+          "Lat": "-7.789200",
+          "Long": "110.363487"
+        },
+        {
+          "nama": "Wates",
+          "Lat": "-7.859558",
+          "Long": "110.157929"
+        },
+        {
+          "nama": "Kutuarjo",
+          "Lat": "-7.726044",
+          "Long": "109.907126"
+        },
+        {
+          "nama": "Kebumen",
+          "Lat": "-7.681909",
+          "Long": "109.662123"
+        },
+        {
+          "nama": "Sidareja",
+          "Lat": "-7.486345",
+          "Long": "108.807519"
+        },
+        {
+          "nama": "Meluwung",
+          "Lat": "-7.394314",
+          "Long": "108.699534"
+        },
+        {
+          "nama": "Banjar",
+          "Lat": "-7.376285",
+          "Long": "108.542423"
+        },
+        {
+          "nama": "Tasikmalaya",
+          "Lat": "-7.322348",
+          "Long": "108.223811"
+        },
+        {
+          "nama": "Cipeundeuy",
+          "Lat": "-7.094600",
+          "Long": "108.103213"
+        },
+        {
+          "nama": "Kiaracondong",
+          "Lat": "-6.924956",
+          "Long": "107.646302"
+        },
+        {
+          "nama": "Bandung",
+          "Lat": "-6.914632",
+          "Long": "107.602438"
+        }
+      ]
+    },
+    {
+      "nama": "Lodaya (Bandung - Solo Balapan)",
+      "stasiun": [
+        {
+          "nama": "Bandung",
+          "Lat": "-6.914632",
+          "Long": "107.602438"
+        },
+        {
+          "nama": "Kiaracondong",
+          "Lat": "-6.924956",
+          "Long": "107.646302"
+        },
+        {
+          "nama": "Cipeundeuy",
+          "Lat": "-7.094600",
+          "Long": "108.103213"
+        },
+        {
+          "nama": "Tasikmalaya",
+          "Lat": "-7.322348",
+          "Long": "108.223811"
+        },
+        {
+          "nama": "Banjar",
+          "Lat": "-7.376285",
+          "Long": "108.542423"
+        },
+        {
+          "nama": "Sidareja",
+          "Lat": "-7.486345",
+          "Long": "108.807519"
+        },
+        {
+          "nama": "Maos",
+          "Lat": "-7.619092",
+          "Long": "109.139473"
+        },
+        {
+          "nama": "Ijo",
+          "Lat": "-7.615272",
+          "Long": "109.446918"
+        },
+        {
+          "nama": "Gombong",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Kutuarjo",
+          "Lat": "-7.726044",
+          "Long": "109.907126"
+        },
+        {
+          "nama": "Wates",
+          "Lat": "-7.859558",
+          "Long": "110.157929"
+        },
+        {
+          "nama": "Yogyakarta",
+          "Lat": "-7.789200",
+          "Long": "110.363487"
+        },
+        {
+          "nama": "Klaten",
+          "Lat": "-7.712342",
+          "Long": "110.603024"
+        },
+        {
+          "nama": "Solo Balapan",
+          "Lat": "-7.557016",
+          "Long": "110.821417"
+        }
+      ]
+    },
+    {
+      "nama": "Mutiara Timur (Surabaya - Banyuwangi)",
+      "stasiun": [
+        {
+          "nama": "Surabaya Gubeng",
+          "Lat": "-7.265678",
+          "Long": "112.752035"
+        },
+        {
+          "nama": "Sidoarjo",
+          "Lat": "-7.456970",
+          "Long": "112.713512"
+        },
+        {
+          "nama": "Bangil",
+          "Lat": "-7.598891",
+          "Long": "112.778317"
+        },
+        {
+          "nama": "Probolinggo",
+          "Lat": "-7.742787",
+          "Long": "113.216008"
+        },
+        {
+          "nama": "Tanggul",
+          "Lat": "-8.162861",
+          "Long": "113.448379"
+        },
+        {
+          "nama": "Rambipuji",
+          "Lat": "-8.203397",
+          "Long": "113.614409"
+        },
+        {
+          "nama": "Jember",
+          "Lat": "-8.164787",
+          "Long": "113.703603"
+        },
+        {
+          "nama": "Kalisat",
+          "Lat": "-8.126871",
+          "Long": "113.812322"
+        },
+        {
+          "nama": "Kalibaru",
+          "Lat": "-8.126871",
+          "Long": "113.812322"
+        },
+        {
+          "nama": "Kalisetail",
+          "Lat": "-8.302854",
+          "Long": "114.139770"
+        },
+        {
+          "nama": "Temuguruh",
+          "Lat": "-8.309794",
+          "Long": "114.201957"
+        },
+        {
+          "nama": "Rogojampi",
+          "Lat": "-8.304502",
+          "Long": "114.292582"
+        },
+        {
+          "nama": "Karangasem",
+          "Lat": "-8.222879",
+          "Long": "114.340794"
+        },
+        {
+          "nama": "Banyuwangi",
+          "Lat": "-8.141180",
+          "Long": "114.397142"
+        },
+        {
+          "nama": "Terminal Ubung",
+          "Lat": "-8.635286",
+          "Long": "115.206134"
+        }
+      ]
+    },
+    {
+      "nama": "Mutiara Timur (Banyuwangi - Surabaya Gubeng)",
+      "stasiun": [
+        {
+          "nama": "Terminal Ubung",
+          "Lat": "-8.635286",
+          "Long": "115.206134"
+        },
+        {
+          "nama": "Banyuwangi",
+          "Lat": "-8.141180",
+          "Long": "114.397142"
+        },
+        {
+          "nama": "Karangasem",
+          "Lat": "-8.222879",
+          "Long": "114.340794"
+        },
+        {
+          "nama": "Rogojampi",
+          "Lat": "-8.304502",
+          "Long": "114.292582"
+        },
+        {
+          "nama": "Temuguruh",
+          "Lat": "-8.309794",
+          "Long": "114.201957"
+        },
+        {
+          "nama": "Kalisetail",
+          "Lat": "-8.302854",
+          "Long": "114.139770"
+        },
+        {
+          "nama": "Kalibaru",
+          "Lat": "-8.126871",
+          "Long": "113.812322"
+        },
+        {
+          "nama": "Kalisat",
+          "Lat": "-8.126871",
+          "Long": "113.812322"
+        },
+        {
+          "nama": "Jember",
+          "Lat": "-8.164787",
+          "Long": "113.703603"
+        },
+        {
+          "nama": "Rambipuji",
+          "Lat": "-8.203397",
+          "Long": "113.614409"
+        },
+        {
+          "nama": "Tanggul",
+          "Lat": "-8.162861",
+          "Long": "113.448379"
+        },
+        {
+          "nama": "Probolinggo",
+          "Lat": "-7.742787",
+          "Long": "113.216008"
+        },
+        {
+          "nama": "Bangil",
+          "Lat": "-7.598891",
+          "Long": "112.778317"
+        },
+        {
+          "nama": "Sidoarjo",
+          "Lat": "-7.456970",
+          "Long": "112.713512"
+        },
+        {
+          "nama": "Surabaya Gubeng",
+          "Lat": "-7.265678",
+          "Long": "112.752035"
+        }
       ]
     }
-  ]
-}
