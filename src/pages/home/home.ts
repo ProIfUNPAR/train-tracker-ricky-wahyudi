@@ -117,7 +117,33 @@ export class HomePage {
   
   onChange(selectedValue){
 	    this.dariStation(selectedValue);
+		this.addPolyLine();
 }
+
+addPolyLine() {
+    var poly = new Array();
+    for (var j=0; j<this.statiun.length;j++){
+    var pos= new google.maps.LatLng(this.statiun[j].Lat,this.statiun[j].Long)
+    poly.push(pos);
+	}
+	var flightPath = new google.maps.Polyline({
+
+        path: poly,
+        geodesic: true,
+
+        strokeColor: '#FF0000',
+
+        strokeOpacity: 1.0,
+
+        strokeWeight: 2
+
+      });
+
+      flightPath.setMap(this.map);
+
+
+}
+
 
  dariStation(value){	
 	for(var i=0;i<this.kereta.length;i++){
