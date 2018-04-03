@@ -4,6 +4,14 @@ import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {
+ GoogleMaps,
+ GoogleMap,
+ GoogleMapsEvent,GoogleMapOptions,
+ CameraPosition,
+ MarkerOptions,
+ Marker
+} from '@ionic-native/google-maps';
 
 declare var google: any;
 @Component({
@@ -12,7 +20,7 @@ declare var google: any;
 })
 export class HomePage {
   resp: any;
-  map: any; 000
+  map: GoogleMap;
   gmLocation: { lat: number, lng: number } = { lat: -6.917464, lng: 107.619123 };
   @ViewChild('map') mapRef: ElementRef;
   markers: any = [];
@@ -24,7 +32,7 @@ export class HomePage {
   statiun = [];
   tujuan = 0;
   stasiunTujuan: any = "Pilih Argo dan Statiun";
-
+  cimage:any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
@@ -49,18 +57,38 @@ export class HomePage {
       this.resp = location;
       this.gmLocation.lat = resp.coords.latitude;
       this.gmLocation.lng = resp.coords.longitude;
-      const options = { center: this.gmLocation, zoom: 12, streetViewControl: false };
-      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+      //const options = { center: this.gmLocation, zoom: 12, streetViewControl: false};
+	  let mapOptions: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: this.gmLocation.lat,
+          lng: this.gmLocation.lng
+        },
+        zoom: 18,
+        tilt: 30
+      }
+     };
+      //this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+	  this.map = GoogleMaps.create('mymap',mapOptions);
+	 this.map.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+		this.map.setMyLocationEnabled(true);
+          
+
+      });
       const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
-      this.addMarker(loc, this.map);
 
 
-      if (this.tujuan == 0) {
-
+      if (this.distance <= 0.5) {
+		
+	  }else if(this.distance <= 0.1){
+		  this.tujuan++;
+		  
       } else {
         this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
         const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-        this.addMarker(stat, this.map);
+        
       }
     }
     );
@@ -68,15 +96,23 @@ export class HomePage {
 
   }
 
-  addMarker(position, map) { // To Add Marker
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
+  addMarker(position) { // To Add Marker
+	
+	this.map.addMarker({
+      animation: 'DROP',
       position: position
     });
-    let content = "<h3>Nearest train station</h3>";
-    this.addInfoWindow(marker, content);
   }
+  
+  pindahMarker(position){
+	  this.map.clear();
+	  this.addPolyLine()
+	  this.map.addMarker({
+      animation: 'DROP',
+      position: position
+    });
+  }
+  
 
   addInfoWindow(marker, content) {
     let infoWindow = new google.maps.InfoWindow({
@@ -114,73 +150,11 @@ export class HomePage {
       this.kereta = data.kereta;
     });
   }
-<<<<<<< HEAD
-  
-  onChange(selectedValue){
-	    this.dariStation(selectedValue);
-		this.addPolyLine();
-}
-
-addPolyLine() {
-    var poly = new Array();
-    for (var j=0; j<this.statiun.length;j++){
-    var pos= new google.maps.LatLng(this.statiun[j].Lat,this.statiun[j].Long)
-    poly.push(pos);
-	}
-	var flightPath = new google.maps.Polyline({
-
-        path: poly,
-        geodesic: true,
-
-        strokeColor: '#FF0000',
-
-        strokeOpacity: 1.0,
-
-        strokeWeight: 2
-
-      });
-
-      flightPath.setMap(this.map);
-
-
-}
-
-
- dariStation(value){	
-	for(var i=0;i<this.kereta.length;i++){
-		if(value==this.kereta[i].nama){
-      this.statiun = this.kereta[i].stasiun;
-		}
-	}
- }
- 
- mulaiDariStatiun(statiun){
-	 
-	 for(var i=0;i<this.statiun.length;i++){
-		if(statiun==this.statiun[i].nama){
-			this.tujuan=i;
-			console.log(this.tujuan);
-		}
-	}
-	if(this.tujuan<this.statiun.length){
-		this.tujuan++;
-		this.distance=this.getDistanceFromLatLonInKm(this.gmLocation.lat,this.gmLocation.lng,this.statiun[this.tujuan].Lat,this.statiun[this.tujuan].Long);
-		this.stasiunTujuan=this.statiun[this.tujuan].nama;
-	}else{
-		this.stasiunTujuan="Anda telah di statiun tujuan terakhir"
-		this.distance="0km";
-	}
-	console.log(this.statiun[this.tujuan].Lat);
-	console.log(this.statiun[this.tujuan].Long);
-	this.addMarker(this.statiun[this.tujuan].Lat,this.statiun[this.tujuan].Long);
-	const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-	this.addMarker(stat, this.map);
-	
- }
-=======
 
   onChange(selectedValue) {
+	 this.map.clear();
     this.dariStation(selectedValue);
+	this.addPolyLine();
   }
 
   dariStation(value) {
@@ -209,10 +183,24 @@ addPolyLine() {
     }
     console.log(this.statiun[this.tujuan].Lat);
     console.log(this.statiun[this.tujuan].Long);
-    this.addMarker(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
     const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-    this.addMarker(stat, this.map);
+    this.addMarker(stat);
 
   }
->>>>>>> 412d3376111fd6a403a47df2080f49608f2b70dc
+  
+  addPolyLine(){
+    var poly = new Array();
+    for (var j=0; j<this.statiun.length;j++){
+    var pos={lat: this.statiun[j].Lat,lng: this.statiun[j].Long};
+    poly.push(pos);
+	}
+	this.map.addPolyline({
+			points: poly,
+            'color' : '#AA00FF',
+            'width': 5,
+            'geodesic': true
+      });
+
+     }
+  
 }
