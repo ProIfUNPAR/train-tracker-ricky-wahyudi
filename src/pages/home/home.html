@@ -12,12 +12,22 @@
       <ion-label>
         <b>KERETA</b>
       </ion-label>
-      <ion-select [(ngModel)]="kereta.kereta">
-        <ion-option *ngFor="let item of kereta">{{ item.nama }}</ion-option>
+      <ion-select [(ngModel)]="kereta.kereta" (ionChange)="onChange(kereta.kereta)">
+        <ion-option *ngFor="let item of kereta" value="{{item.nama}}">{{ item.nama }}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
-  <button ion-button style="background-color: red" full>Daftar Stasiun</button>
-  <div #map id="mymap"></div>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <b>STASIUN KEBERANGKATAN</b>
+      </ion-label>
+      <ion-select [(ngModel)]="statiuns" (ionChange)="mulaiDariStatiun(statiuns)">
+        <ion-option *ngFor="let item1 of statiun" value="{{item1.nama}}">{{ item1.nama }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <h3>Statiun Selanjutnya : {{stasiunTujuan}}</h3>
+  <h3>Distance : {{distance}}</h3>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>
