@@ -26,6 +26,7 @@ export class HomePage {
   markers: any = [];
   train: { lat: number, lng: number } = { lat: -6.9126, lng: 107.6023 };
   distance: any = "Pilih Argo dan Statiun";
+  distances: any = "Pilih Argo dan Statiun";
   time: any = "Pilih Argo dan Statiun";
   kecepatan: any = "Pilih Argo dan Statiun";
   kereta = [];
@@ -33,6 +34,10 @@ export class HomePage {
   tujuan = 0;
   stasiunTujuan: any = "Pilih Argo dan Statiun";
   cimage:any;
+  speed:any=48;
+  posisilat:any=[];
+  posisilong:any=[];
+  timestamp:any=[];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
@@ -42,29 +47,42 @@ export class HomePage {
   ionViewDidLoad() {
     this.onLocateUser();
     //this.DisplayMap();
-    this.calculateAndDisplayRoute();
     this.kereta;
     this.statiun;
     this.distance;
+	this.distances;
     this.time;
     this.kecepatan;
     this.stasiunTujuan;
+	this.speed;
   }
 
   onLocateUser() {
+	  var counter=0;
     this.geoloc.watchPosition().subscribe((resp) => {
       console.log('position gotten: long:', resp.coords.longitude, ' lat:', resp.coords.latitude);
       this.resp = location;
       this.gmLocation.lat = resp.coords.latitude;
+	  this.posisilat.push(this.gmLocation.lat);
       this.gmLocation.lng = resp.coords.longitude;
-      //const options = { center: this.gmLocation, zoom: 12, streetViewControl: false};
+	  this.posisilong.push(this.gmLocation.lng);
+	  this.timestamp.push(new Date());
+	  if(counter>0){
+		  var jarak=this.getDistanceFromLatLonInKm(this.posisilat[counter-1], this.posisilong[counter-1], this.posisilat[counter], this.posisilong[counter]);
+		  var diff=this.msToTime(this.timestamp[counter]-this.timestamp[counter-1]);
+		  this.speed=jarak*3600/diff;
+	  }else{
+		  this.speed=48;
+	  }
+	  counter++;
+	  this.speed=resp.coords.speed;
 	  let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
           lat: this.gmLocation.lat,
           lng: this.gmLocation.lng
         },
-        zoom: 18,
+        zoom: 9,
         tilt: 30
       }
      };
@@ -78,50 +96,59 @@ export class HomePage {
 
       });
       const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
-
-
-      if (this.distance <= 0.5) {
-		
-	  }else if(this.distance <= 0.1){
-		  this.tujuan++;
-		  
-      } else {
-        this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-        const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-        
-      }
+	  if(this.distance<0.1){
+			if (this.tujuan < this.statiun.length-1) {
+			this.tujuan++;
+			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			this.stasiunTujuan = this.statiun[this.tujuan].nama;
+			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+			}
+			} else {
+			this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
+			this.distance = "0km";
+			this.distances="0km";
+			}
+	  }else if(this.distance<0.5){
+			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+	  }}
+	  else{
+			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+	  }}
+	   
+     
     }
     );
 
 
   }
+  
+  
+  msToTime(s) {
+  
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  return s;
+}
+  
 
   addMarker(position) { // To Add Marker
-	
-	this.map.addMarker({
-      animation: 'DROP',
-      position: position
-    });
-  }
-  
-  pindahMarker(position){
-	  this.map.clear();
-	  this.addPolyLine()
-	  this.map.addMarker({
-      animation: 'DROP',
-      position: position
-    });
+	this.map.clear();
+	this.addPolyLine();
+	var marker = this.map.addMarker({
+          position: position,
+          map: this.map
+        });
   }
   
 
-  addInfoWindow(marker, content) {
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
-  }
 
 
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -141,10 +168,7 @@ export class HomePage {
   deg2rad(deg) {
     return deg * (Math.PI / 180)
   }
-  calculateAndDisplayRoute() {
-    return this.time;
-  }
-
+  
   loadJson() {
     this.http.get('./assets/data/kereta_api.json').map(res => res.json()).subscribe(data => {
       this.kereta = data.kereta;
@@ -152,7 +176,7 @@ export class HomePage {
   }
 
   onChange(selectedValue) {
-	 this.map.clear();
+	this.map.clear();
     this.dariStation(selectedValue);
 	this.addPolyLine();
   }
@@ -173,13 +197,18 @@ export class HomePage {
         console.log(this.tujuan);
       }
     }
-    if (this.tujuan < this.statiun.length) {
+    if (this.tujuan < this.statiun.length-1) {
       this.tujuan++;
       this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
       this.stasiunTujuan = this.statiun[this.tujuan].nama;
+	  this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+	  for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+      this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+     }
     } else {
       this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
       this.distance = "0km";
+	  this.distances="0km";
     }
     console.log(this.statiun[this.tujuan].Lat);
     console.log(this.statiun[this.tujuan].Long);
