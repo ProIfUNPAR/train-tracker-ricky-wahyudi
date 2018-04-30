@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import {
  GoogleMaps,
  GoogleMap,
@@ -38,14 +39,17 @@ export class HomePage {
   posisilat:any=[];
   posisilong:any=[];
   timestamp:any=[];
+  counter=0;
+  ETA:any;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http ,private localNoti: LocalNotifications, private platform: Platform) {
     this.loadJson();
+	
+
   }
 
   ionViewDidLoad() {
-    this.onLocateUser();
+	this.onLocateUser();
     //this.DisplayMap();
     this.kereta;
     this.statiun;
@@ -55,27 +59,33 @@ export class HomePage {
     this.kecepatan;
     this.stasiunTujuan;
 	this.speed;
+	this.counter;
+	this.getETA;
   }
+  
 
   onLocateUser() {
-	  var counter=0;
     this.geoloc.watchPosition().subscribe((resp) => {
-      console.log('position gotten: long:', resp.coords.longitude, ' lat:', resp.coords.latitude);
+      this.timestamp.push(new Date());
+	  console.log('position gotten: long:', resp.coords.longitude, ' lat:', resp.coords.latitude);
       this.resp = location;
       this.gmLocation.lat = resp.coords.latitude;
 	  this.posisilat.push(this.gmLocation.lat);
       this.gmLocation.lng = resp.coords.longitude;
 	  this.posisilong.push(this.gmLocation.lng);
-	  this.timestamp.push(new Date());
-	  if(counter>0){
-		  var jarak=this.getDistanceFromLatLonInKm(this.posisilat[counter-1], this.posisilong[counter-1], this.posisilat[counter], this.posisilong[counter]);
-		  var diff=this.msToTime(this.timestamp[counter]-this.timestamp[counter-1]);
-		  this.speed=jarak*3600/diff;
-	  }else{
-		  this.speed=48;
+	  
+	  console.log(this.gmLocation.lat);
+	  console.log(this.gmLocation.lng);
+	  
+	  if(this.counter>0){
+		  var jarak=this.getDistanceFromLatLonInKm(this.posisilat[this.counter-1], this.posisilong[this.counter-1], this.posisilat[this.counter], this.posisilong[this.counter]);
+		  var diff=(this.timestamp[this.counter]-this.timestamp[this.counter-1])/1000;
+		  console.log("waktu : "+diff);
+		  console.log("jarak : "+jarak );
+		  this.speed=jarak*3600/(diff);
+		  
 	  }
-	  counter++;
-	  this.speed=resp.coords.speed;
+	  this.counter++;
 	  let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -96,48 +106,42 @@ export class HomePage {
 
       });
       const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
+	  this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+	  this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+		}
+		if(this.speed<38){
+			  this.ETA=this.distances/38;
+		  }else{
+			  this.ETA=this.distances/this.speed;
+		  }
 	  if(this.distance<0.1){
 			if (this.tujuan < this.statiun.length-1) {
 			this.tujuan++;
-			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+			
 			this.stasiunTujuan = this.statiun[this.tujuan].nama;
-			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
-			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
-			}
 			} else {
 			this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
 			this.distance = "0km";
 			this.distances="0km";
-			}
-	  }else if(this.distance<0.5){
-			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
-			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
-	  }}
+		}
+	  }
 	  else{
-			this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-			this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-			for (var z = this.tujuan; z < this.statiun.length-2; z++) {
-			this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
-	  }}
+		  
+		  
+			}
+		}
+	
 	   
      
-    }
+    
     );
 
 
   }
   
   
-  msToTime(s) {
-   var ms = s % 1000;
-  s = (s - ms) / 1000;
-  var secs = s % 60;
-  s = (s - secs) / 60;
-  return s;
-}
   
 
   addMarker(position) { // To Add Marker
@@ -149,7 +153,13 @@ export class HomePage {
         });
   }
   
-
+  getETA(){
+	  var nilai=this.ETA;
+	  var minutes=this.ETA-(this.ETA%1);
+	  minutes=minutes*60-(minutes%1);
+	  return nilai+" jam "+minutes+" menit ";
+	  
+  }
 
 
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -180,6 +190,7 @@ export class HomePage {
 	this.map.clear();
     this.dariStation(selectedValue);
 	this.addPolyLine();
+	this.alarm();
   }
 
   dariStation(value) {
@@ -200,12 +211,12 @@ export class HomePage {
     }
     if (this.tujuan < this.statiun.length-1) {
       this.tujuan++;
-      this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+      //this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
       this.stasiunTujuan = this.statiun[this.tujuan].nama;
-	  this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-	  for (var z = this.tujuan; z < this.statiun.length-2; z++) {
-      this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
-     }
+	  //this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+	  //for (var z = this.tujuan; z < this.statiun.length-2; z++) {
+      //this.distances=this.distances+this.getDistanceFromLatLonInKm(this.statiun[z].Lat, this.statiun[z].Long,this.statiun[z+1].Lat, this.statiun[z+1].Long);
+     //}
     } else {
       this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
       this.distance = "0km";
@@ -215,7 +226,7 @@ export class HomePage {
     console.log(this.statiun[this.tujuan].Long);
     const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
     this.addMarker(stat);
-
+	this.onLocateUser();
   }
   
   addPolyLine(){
@@ -232,5 +243,16 @@ export class HomePage {
       });
 
      }
+	 
+  alarm() {
+    this.platform.ready().then(() => {
+      this.localNoti.schedule({
+        id: 1,
+        title: 'Coba',
+        text: 'YESSS',
+        trigger: { at: new Date(new Date().getTime() + 100) }
+      });
+    });
+  }
   
 }
