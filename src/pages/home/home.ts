@@ -68,15 +68,15 @@ export class HomePage {
         tilt: 30
       }
      };
-      //this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-	  this.map = GoogleMaps.create('mymap',mapOptions);
-	 this.map.one(GoogleMapsEvent.MAP_READY)
-      .then(() => {
-        console.log('Map is ready!');
-		this.map.setMyLocationEnabled(true);
+      this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
+	  //this.map = GoogleMaps.create('mymap',mapOptions);
+	 //this.map.one(GoogleMapsEvent.MAP_READY)
+      //.then(() => {
+       // console.log('Map is ready!');
+		//this.map.setMyLocationEnabled(true);
           
 
-      });
+      //});
       const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
 
 
@@ -86,8 +86,7 @@ export class HomePage {
 		  this.tujuan++;
 		  
       } else {
-        this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-        const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
+        //this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, //this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
         
       }
     }
@@ -181,8 +180,6 @@ export class HomePage {
       this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
       this.distance = "0km";
     }
-    console.log(this.statiun[this.tujuan].Lat);
-    console.log(this.statiun[this.tujuan].Long);
     const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
     this.addMarker(stat);
 
