@@ -35,12 +35,12 @@ export class HomePage {
   tujuan = 0;
   stasiunTujuan: any = "Pilih Argo dan Statiun";
   cimage:any;
-  speed:any=48;
+  speed:any= "Pilih Argo dan Statiun";
   posisilat:any=[];
   posisilong:any=[];
   timestamp:any=[];
   counter=0;
-  ETA:any;
+  ETA:any= "Pilih Argo dan Statiun";;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http ,private localNoti: LocalNotifications, private platform: Platform) {
     this.loadJson();
@@ -60,7 +60,7 @@ export class HomePage {
     this.stasiunTujuan;
 	this.speed;
 	this.counter;
-	this.getETA;
+	this.getETA();
   }
   
 
@@ -162,10 +162,11 @@ export class HomePage {
   }
   
   getETA(){
-	  var nilai=this.ETA;
-	  var minutes=this.ETA-(this.ETA%1);
-	  minutes=minutes*60-(minutes%1);
-	  return nilai+" jam "+minutes+" menit ";
+	  if(this.ETA>1){
+		  return Math.floor(this.ETA)+" jam"
+	  }else{
+		  return Math.floor(this.ETA*60)+" menit"
+	  }
 	  
   }
 
