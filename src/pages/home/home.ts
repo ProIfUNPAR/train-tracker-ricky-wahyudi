@@ -58,7 +58,9 @@ export class HomePage {
     this.time;
     this.kecepatan;
     this.stasiunTujuan;
-	this.speed;
+	this.getSpeed();
+	this.getJarakStatiunTerdekat();
+	this.getJarakStatiunAkhir();
 	this.counter;
 	this.getETA();
   }
@@ -96,15 +98,15 @@ export class HomePage {
         tilt: 30
       }
      };
-      this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
-	  //this.map = GoogleMaps.create('mymap',mapOptions);
-	 //this.map.one(GoogleMapsEvent.MAP_READY)
-      //.then(() => {
-       // console.log('Map is ready!');
-		//this.map.setMyLocationEnabled(true);
+      //this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+	  this.map = GoogleMaps.create('mymap',mapOptions);
+	 this.map.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+		this.map.setMyLocationEnabled(true);
           
 
-      //});
+      });
       const loc = new google.maps.LatLng(this.gmLocation.lat, this.gmLocation.lng);
 	  this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
 	  this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
@@ -119,7 +121,7 @@ export class HomePage {
 	  if(this.distance<0.1){
 			if (this.tujuan < this.statiun.length-1) {
 			this.tujuan++;
-			
+			this.localNoti.clearAll();
 			this.stasiunTujuan = this.statiun[this.tujuan].nama;
 			} else {
 			this.stasiunTujuan = "Anda telah di statiun tujuan terakhir"
@@ -127,23 +129,18 @@ export class HomePage {
 			this.distances="0km";
 		}
 	  }
-	  else{
+	  else if(this.distance<0.5){
+		  this.localNoti.clearAll();
+		  this.alarmAkanSampai();
 		  
-<<<<<<< HEAD
-      } else {
-        //this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, //this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
-        
-      }
-    }
-=======
-		  
-			}
+		}else if(this.distance<0.7){
+			this.alarmSampai();
+		}
 		}
 	
 	   
      
     
->>>>>>> e399664c5ea795e900fcb1d3673207f43404c520
     );
 
 
@@ -169,6 +166,27 @@ export class HomePage {
 	  }
 	  
   }
+  
+  getSpeed(){
+	  return Math.floor(this.speed)+ " km/jam";
+	  
+  }
+  
+  getJarakStatiunTerdekat(){
+	  if(this.distance>1){
+			return Math.floor(this.distance)+" km";}
+	  else{
+		 return Math.floor(this.distance*1000)+" m";} 
+	  }
+	  
+  
+
+  getJarakStatiunAkhir(){
+	  if(this.distances>1){
+	  return Math.floor(this.distances)+" km";}
+	  else{
+		 return Math.floor(this.distances*1000)+" m";} 
+	  }
 
 
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -199,7 +217,7 @@ export class HomePage {
 	this.map.clear();
     this.dariStation(selectedValue);
 	this.addPolyLine();
-	this.alarm();
+	//this.alarm();
   }
 
   dariStation(value) {
@@ -219,7 +237,7 @@ export class HomePage {
       }
     }
     if (this.tujuan < this.statiun.length-1) {
-      this.tujuan++;
+      //this.tujuan++;
       //this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
       this.stasiunTujuan = this.statiun[this.tujuan].nama;
 	  //this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
@@ -231,6 +249,8 @@ export class HomePage {
       this.distance = "0km";
 	  this.distances="0km";
     }
+    console.log(this.statiun[this.tujuan].Lat);
+    console.log(this.statiun[this.tujuan].Long);
     const stat = new google.maps.LatLng(this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
     this.addMarker(stat);
 	this.onLocateUser();
@@ -251,15 +271,28 @@ export class HomePage {
 
      }
 	 
-  alarm() {
+  alarmAkanSampai() {
+	  
     this.platform.ready().then(() => {
       this.localNoti.schedule({
         id: 1,
-        title: 'Coba',
-        text: 'YESSS',
+        title: 'Alert',
+        text: 'Anda akan segera tiba di '+this.statiun[this.tujuan].nama,
         trigger: { at: new Date(new Date().getTime() + 100) }
       });
-    });
+	  });
+  }
+  
+  alarmSampai() {
+	  
+    this.platform.ready().then(() => {
+      this.localNoti.schedule({
+        id: 1,
+        title: 'Alert',
+        text: 'Anda telah tiba di '+this.statiun[this.tujuan].nama,
+        trigger: { at: new Date(new Date().getTime() + 100) }
+      });
+	  });
   }
   
 }

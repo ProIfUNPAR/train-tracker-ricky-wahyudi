@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "kereta": [
     {
@@ -567,6 +566,131 @@
       ]
     },
     {
+      "nama": "Mutiara Selatan (Malang-Bandung)",
+      "stasiun": [
+        {
+          "nama": "Malang",
+          "Lat": "-7.977497",
+          "Long": "112.637028"
+        },
+        {
+          "nama": "Lawang",
+          "Lat": "-7.836726",
+          "Long": "112.697624"
+        },
+        {
+          "nama": "Bangil",
+          "Lat": "-7.598891",
+          "Long": "112.778317"
+        },
+        {
+          "nama": "Sidoarjo",
+          "Lat": "-7.456970",
+          "Long": "112.713512"
+        },
+        {
+          "nama": "Surabaya Gudeng",
+          "Lat": "-7.265678",
+          "Long": "112.752035"
+        },
+        {
+          "nama": "Mojokerto",
+          "Lat": "-7.472167",
+          "Long": "112.434921"
+        },
+        {
+          "nama": "Jombang",
+          "Lat": "-7.558042",
+          "Long": "112.233614"
+        },
+        {
+          "nama": "Kertosono",
+          "Lat": "-7.592115",
+          "Long": "112.100625"
+        },
+        {
+          "nama": "Nganjuk",
+          "Lat": "-7.600247",
+          "Long": "111.902752"
+        },
+        {
+          "nama": "Madiun",
+          "Lat": "-7.618830",
+          "Long": "111.524395"
+        },
+        {
+          "nama": "Solo Balapan",
+          "Lat": "-7.557016",
+          "Long": "110.821417"
+        },
+        {
+          "nama": "Yogyakarta",
+          "Lat": "-7.789200",
+          "Long": "110.363487"
+        },
+        {
+          "nama": "Kutoarjo",
+          "Lat": "-7.726044",
+          "Long": "109.907126"
+        },
+        {
+          "nama": "Kebumen",
+          "Lat": "-7.681909",
+          "Long": "109.662123"
+        },
+        {
+          "nama": "Gombong",
+          "Lat": "-7.610921",
+          "Long": "109.507770"
+        },
+        {
+          "nama": "Kroya",
+          "Lat": "-7.630120",
+          "Long": "109.253538"
+        },
+        {
+          "nama": "Maos",
+          "Lat": "-7.619092",
+          "Long": "109.139473"
+        },
+        {
+          "nama": "Banjar",
+          "Lat": "-7.376285",
+          "Long": "108.542423"
+        },
+        {
+          "nama": "Ciamis",
+          "Lat": "-7.329145",
+          "Long": "108.356002"
+        },
+        {
+          "nama": "Tasikmalaya",
+          "Lat": "-7.322348",
+          "Long": "108.223811"
+        },
+        {
+          "nama": "Cipeundeuy",
+          "Lat": "-7.094600",
+          "Long": "108.103213"
+        },
+        {
+          "nama": "Cicalengka",
+          "Lat": "-6.981492",
+          "Long": "107.832652"
+        },
+        {
+          "nama": "Kiaracondong",
+          "Lat": "-6.924956",
+          "Long": "107.646302"
+        },
+        {
+          "nama": "Bandung",
+          "Lat": "-6.914632",
+          "Long": "107.602438"
+        }
+      ] 
+    },
+    {
       "nama": "Mutiara Selatan (Bandung-Malang)",
       "stasiun": [
         {
@@ -610,19 +734,9 @@
           "Long": "109.253538"
         },
         {
-          "nama": "Kebumen",
-          "Lat": "-7.681909",
-          "Long": "109.662123"
-        },
-        {
           "nama": "Kemranjen",
           "Lat": "-7.621419",
           "Long": "109.314918"
-        },
-        {
-          "nama": "Kutoarjo",
-          "Lat": "-7.726044",
-          "Long": "109.907126"
         },
         {
           "nama": "Ijo",
@@ -680,7 +794,7 @@
           "Long": "112.434921"
         },
         {
-          "nama": "Surabaya Gudeng",
+          "nama": "Surabaya Gubeng",
           "Lat": "-7.265678",
           "Long": "112.752035"
         },
@@ -688,6 +802,11 @@
           "nama": "Sidoarjo",
           "Lat": "-7.456970",
           "Long": "112.713512"
+        },
+        {
+          "nama": "Porong",
+          "Lat": "-7.538352",
+          "Long": "112.701672"
         },
         {
           "nama": "Bangil",
@@ -1038,7 +1157,7 @@
           "nama": "Banyuwangi Baru",
           "Lat": "-8.141180",
           "Long": "114.397142"
-        },
+        }
       ]
     },
     {
@@ -1187,7 +1306,7 @@
         ]
       },
       {
-        "nama": "Harina(Bandung - Surabaya Pasar Turi)",
+        "nama": "Harina (Bandung - Surabaya Pasar Turi)",
         "stasiun": [
           {
             "nama": "Bandung",
@@ -1263,4 +1382,3 @@
       }
     ]
   }
->>>>>>> 6fe9503796a6259c918ba38d5d763958a7a81a72

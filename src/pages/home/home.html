@@ -28,9 +28,9 @@
     </ion-item>
   </ion-list>
   <h5>Statiun Selanjutnya : {{stasiunTujuan}}</h5>
-  <h5>Distance : {{distance}}</h5>
-  <h5>Distance to destination : {{distances}}</h5>
-  <h5>Speed : {{speed}}</h5>
+  <h5>Distance : {{getJarakStatiunTerdekat()}}</h5>
+  <h5>Distance to destination : {{getJarakStatiunAkhir()}}</h5>
+  <h5>Speed : {{getSpeed()}}</h5>
   <h5>ETA : {{getETA()}}</h5>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>
