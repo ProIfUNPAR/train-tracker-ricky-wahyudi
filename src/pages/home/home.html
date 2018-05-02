@@ -1,10 +1,12 @@
+
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Train Tracker
+    <ion-title class="title">
+  <h1 >TRAIN TRACKER</h1>
     </ion-title>
   </ion-navbar>
 </ion-header>
+
 
 <ion-content padding>
   <ion-list>
@@ -27,10 +29,10 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <h5>Statiun Selanjutnya : {{stasiunTujuan}}</h5>
-  <h5>Distance : {{getJarakStatiunTerdekat()}}</h5>
-  <h5>Distance to destination : {{getJarakStatiunAkhir()}}</h5>
-  <h5>Speed : {{getSpeed()}}</h5>
-  <h5>ETA : {{getETA()}}</h5>
+  <h6>Statiun Selanjutnya : {{stasiunTujuan}}</h6>
+  <h6>Distance : {{getJarakStatiunTerdekat()}}</h6>
+  <h6>Distance to destination : {{getJarakStatiunAkhir()}}</h6>
+  <h6>Speed : {{getSpeed()}}</h6>
+  <h6>ETA : {{getETA()}}</h6>
   <div #map id="mymap" style="weight:80%;height:80%;"></div>
 </ion-content>

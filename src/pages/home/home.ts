@@ -5,6 +5,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { BackgroundMode } from '@ionic-native/background-mode';
 import {
  GoogleMaps,
  GoogleMap,
@@ -42,9 +43,9 @@ export class HomePage {
   counter=0;
   ETA:any= "Pilih Argo dan Statiun";;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http ,private localNoti: LocalNotifications, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geoloc: Geolocation, public http: Http ,private localNoti: LocalNotifications, private platform: Platform,private backgroundMode: BackgroundMode) {
     this.loadJson();
-	
+	this.backgroundMode.enable();
 
   }
 
@@ -85,7 +86,9 @@ export class HomePage {
 		  console.log("waktu : "+diff);
 		  console.log("jarak : "+jarak );
 		  this.speed=jarak*3600/(diff);
-		  
+		  if(this.speed>90){
+			  this.speed=90;
+		  }
 	  }
 	  this.counter++;
 	  let mapOptions: GoogleMapOptions = {
@@ -131,10 +134,10 @@ export class HomePage {
 	  }
 	  else if(this.distance<0.5){
 		  this.localNoti.clearAll();
-		  this.alarmAkanSampai();
+		  this.alarmSampai();
 		  
 		}else if(this.distance<0.7){
-			this.alarmSampai();
+			this.alarmAkanSampai();
 		}
 		}
 	
@@ -160,9 +163,9 @@ export class HomePage {
   
   getETA(){
 	  if(this.ETA>1){
-		  return Math.floor(this.ETA)+" jam"
+		  return Math.floor(this.ETA)+" jam "+Math.floor((this.ETA-(Math.floor(this.ETA)))*60)+" menit";
 	  }else{
-		  return Math.floor(this.ETA*60)+" menit"
+		  return Math.floor(this.ETA*60)+" menit";
 	  }
 	  
   }
@@ -227,7 +230,7 @@ export class HomePage {
       }
     }
   }
-
+  
   mulaiDariStatiun(statiun) {
 
     for (var i = 0; i < this.statiun.length; i++) {
@@ -237,7 +240,7 @@ export class HomePage {
       }
     }
     if (this.tujuan < this.statiun.length-1) {
-      //this.tujuan++;
+      this.tujuan++;
       //this.distance = this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
       this.stasiunTujuan = this.statiun[this.tujuan].nama;
 	  //this.distances=this.getDistanceFromLatLonInKm(this.gmLocation.lat, this.gmLocation.lng, this.statiun[this.tujuan].Lat, this.statiun[this.tujuan].Long);
@@ -270,6 +273,7 @@ export class HomePage {
       });
 
      }
+
 	 
   alarmAkanSampai() {
 	  

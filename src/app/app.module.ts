@@ -8,7 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
-
+import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
 	Location,
 	Geolocation,
-	LocalNotifications
+	LocalNotifications,
+	BackgroundMode
   ]
 })
 export class AppModule {}
