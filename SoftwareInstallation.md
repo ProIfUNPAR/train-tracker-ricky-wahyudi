@@ -5,7 +5,7 @@ Hardware System Requirements :
 
 1) Android Nougat 7.0 
 2) Support mobile data 4G LTE/3G/HSDPA
-3) Minimun processor : quadcore
+3) Minimum processor : quadcore
 
 
 For installing software, you need :
@@ -14,7 +14,7 @@ For installing software, you need :
 - Ionic and Cordova library
 - Java JDK
 - Import ionic - geolocation
-- Import ionic - maps
+- Import ionic - native maps
 - Import ionic - local notification
-
+- Import ionic -backgroundmode
 ==========================================
