@@ -2,7 +2,7 @@
 train-tracker-ricky-wahyudi created by GitHub Classroom
 
 DESCRIPTION:
-Train Tracker Ricky Wahyudi is an application to reminds 
+Train Tracker Ricky Wahyudi is an application to remind 
 user to alight the train and not to miss the stop. The
 application can:
 - Detect current location
